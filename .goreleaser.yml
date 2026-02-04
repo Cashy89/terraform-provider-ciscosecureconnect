@@ -1,8 +1,11 @@
 project_name: terraform-provider-ciscosecureconnect
+
 builds:
-  - id: ciscosecureconnect
-    main: ./main.go
+  - id: provider
+    main: ./main.go               # adjust if your entrypoint is different
     binary: terraform-provider-ciscosecureconnect
+    env:
+      - CGO_ENABLED=0
     goos:
       - linux
       - darwin
@@ -10,15 +13,9 @@ builds:
     goarch:
       - amd64
       - arm64
-    env:
-      - CGO_ENABLED=0
 
 archives:
   - id: archive
-    replacements:
-      darwin: darwin
-      linux: linux
-      windows: windows
     format: tar.gz
     files:
       - terraform-registry-manifest.json
@@ -26,21 +23,22 @@ archives:
       - LICENSE
 
 signs:
-  - cmd: gpg
+  - id: gpg
+    cmd: gpg
     args:
       - --batch
       - --yes
       - --pinentry-mode
       - loopback
       - --passphrase
-      - '{{ .Env.GPG_PASSPHRASE }}'
+      - "{{ .Env.GPG_PASSPHRASE }}"
       - --output
       - "{{ .ArtifactPath }}.sig"
       - --detach-sign
       - "{{ .ArtifactPath }}"
 
-changelog:
-  skip: true
+checksum:
+  name_template: "checksums.txt"
 
 release:
   github:
@@ -48,3 +46,6 @@ release:
     name: terraform-provider-ciscosecureconnect
     draft: false
     prerelease: false
+
+changelog:
+  skip: true
