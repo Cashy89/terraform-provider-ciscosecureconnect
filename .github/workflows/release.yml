@@ -24,7 +24,7 @@ jobs:
         with:
           go-version: '1.21' # adjust if you need a different version
 
-      - name: Debug: goreleaser version (pre-install)
+      - name: "Debug: goreleaser version (pre-install)"
         run: goreleaser --version || true
 
       - name: Import GPG private key
