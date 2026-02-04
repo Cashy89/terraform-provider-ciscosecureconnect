@@ -2,7 +2,7 @@ project_name: terraform-provider-ciscosecureconnect
 
 builds:
   - id: provider
-    main: ./main.go               # adjust if your entrypoint is different
+    main: ./main.go
     binary: terraform-provider-ciscosecureconnect
     env:
       - CGO_ENABLED=0
@@ -14,9 +14,13 @@ builds:
       - amd64
       - arm64
 
+checksum:
+  name_template: "SHA256SUMS"
+
 archives:
   - id: archive
     format: tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     files:
       - terraform-registry-manifest.json
       - README.md
