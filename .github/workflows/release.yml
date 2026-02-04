@@ -40,6 +40,11 @@ jobs:
           # ensure gpg-agent will accept loopback pinentry
           gpgconf --kill gpg-agent || true
 
+      - name: Debug GPG keys
+        run: |
+          gpg --list-secret-keys --keyid-format LONG --with-fingerprint
+          gpg --list-keys --keyid-format LONG --with-fingerprint
+
       - name: Install dependencies (optional)
         run: |
           # any pre-build steps you require (lint, go mod download)
