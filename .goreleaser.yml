@@ -4,7 +4,7 @@ project_name: terraform-provider-ciscosecureconnect
 
 builds:
   - id: provider
-    main: ./main.go
+    main: .
     binary: terraform-provider-ciscosecureconnect
     env:
       - CGO_ENABLED=0
