@@ -1,3 +1,5 @@
+version: 2
+
 project_name: terraform-provider-ciscosecureconnect
 
 builds:
@@ -41,15 +43,26 @@ signs:
       - --detach-sign
       - "{{ .ArtifactPath }}"
 
-checksum:
-  name_template: "checksums.txt"
-
 release:
+  # repo-level release options (NOT nested under github)
+  ids: []                 # empty = use all archives
+  draft: false            # <-- moved here (release-level)
+  replace_existing_draft: false
+  use_existing_draft: false
+  prerelease: auto        # true/false/auto - set as you need
+  make_latest: true
+  mode: append
+  disable: false
+  skip_upload: false
+
+  # SCM specific config
   github:
     owner: Cashy89
     name: terraform-provider-ciscosecureconnect
-    draft: false
-    prerelease: false
+    # github.* only contains owner/name and other github-specific options,
+    # but NOT draft/prerelease (those live at the release: level above).
 
 changelog:
-  skip: true
+  disable: true   # replace old `skip: true` with `disable: true`
+
+# other optional settings...
